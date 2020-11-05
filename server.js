@@ -11,11 +11,12 @@ var corsOptions = {
 app.use(cors(corsOptions));
 
 const db = require("./app/models");
-//En prod : db.sequelize.sync();
+//En prod : 
+db.sequelize.sync();
 //En dev :
-db.sequelize.sync({ force: true }).then(() => {
+/*db.sequelize.sync({ force: true }).then(() => {
     console.log("Drop and re-sync db.");
-});
+});*/
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
@@ -27,6 +28,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to fdariel application." });
 });
+
+require("./app/routes/turorial.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
